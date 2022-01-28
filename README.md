@@ -2,8 +2,9 @@
 
 This is an extention of the [DRPPM Expression Analysis ShinY (EASY) Integration App](https://github.com/shawlab-moffitt/DRPPM-EASY-Integration) which allows the user to integrate their data with the data of a large project database, for example we use the [Cancer Cell Line Encyclopedia (CCLE)](https://sites.broadinstitute.org/ccle/) and a [Lung Squamous Cell Carcinoma](https://www.sciencedirect.com/science/article/pii/S0092867421008576?via%3Dihub) study from Clinical Proteomic Tumor Analysis Consortium (CPTAC). Through the integration of data sets, users may perform expression level differences and in-depth reciprocal Gene Set Enrichment Analysis (GSEA). This R Shiny app is very similar in features to the original Integration app, with the addition of a sample selection tab which allows the user to subset samples or a study of their choice. Based on this selection, the expression and meta data will be subset and imported in the back end to the app for further analysis and visualization. While this GitHub page can be cloned and ran locally there are current versions of the CCLE app and CPTAC app found at the links below.
 
-CCLE: http://networkbiology.science/shiny/DRPPM_EASY_CCLE_Integration/
-CPTAC_LSCC: http://networkbiology.science/shiny/DRPPM_EASY_CPTAC_Integration/
+CCLE: http://networkbiology.science/shiny/DRPPM_EASY_LargeProject_Integration_CCLE/
+
+CPTAC_LSCC: http://networkbiology.science/shiny/DRPPM_EASY_LargeProject_Integration_CPTAC/
 
 
 # Installation
@@ -112,3 +113,5 @@ db_namemap_file <- '~/R/DRPPM-EASY-Database-Integration-main/CCLE_data/CCLE_Name
    * These new groups 1 and 2 will be used for the downstream analysis
 3. The new groups can be labeled here
 4. The new meta table that is generated and shown may be names and downloaded for further use
+
+The corresponding tabs are idenctical to the tabs in the original DRPPM EASY Integration app where more information on those features can be found [here](https://github.com/shawlab-moffitt/DRPPM-EASY-Integration).
