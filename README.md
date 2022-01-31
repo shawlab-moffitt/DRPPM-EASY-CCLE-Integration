@@ -42,18 +42,21 @@ CPTAC_LSCC: http://networkbiology.science/shiny/DRPPM_EASY_LargeProject_Integrat
       * Larger files might inflict memory issues for you local computer
   * Meta File:
     * Must be tab delimited with two columns. First column of sasmple names and second column as phenotype grouping of the samples
-* **Expression Matrix (.tsv/.txt):**
+
+## Required for Setup
+
+* **Large Project Expression Matrix (.tsv/.txt):**
   * Must be tab delimited with gene names as symbols located in the first column with subsequent columns consiting of the sample name as the header and expression data down the column.
-* **Meta Data (.tsv/.txt):**
+* **Large Project Meta Data (.tsv/.txt):**
   * Three column, tab-delimited, format with columns in the order of Sample Name, Meta Group, Sample Type
   * This is used to group the expression data into comparison groups for differential expression analysis
-* **Meta Selector Data (.tsv/.txt)(Optional):**
+* **Large Project Meta Selector Data (.tsv/.txt)(Optional):**
   * This is used when the expression data is able to be subset for analysis
     * In the case of the CCLE example we can subset the expression data based on disease or lineage before grouping with the meta file
   * This is a two column, tab-delimited, file with the first column being the meta groups (as seen in the second column of the main meta data) and the second column is either "Phenotype" or "Selector"
     * "Selector" designates if the meta group is used to subset the expression data
     * "Phenotype" designates if the meta group is used to group the expression data
-* **Name Map File (.tsv/.txt)(Optional):**
+* **Large Project Name Map File (.tsv/.txt)(Optional):**
   * This is a two-column, tab delimited file with the first column consisting of the sample names used in the expression and meta data and a second column consisting of a possible alternative/extended name or more information on that sample.
   * This can be usefull when sample names might be acronyms of a longer name or there is more information the user may want to allocate to that sample.
 
