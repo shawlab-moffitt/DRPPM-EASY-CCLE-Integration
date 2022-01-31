@@ -1,6 +1,8 @@
 Condition	Condition_Type
 sex	Phenotype
 lineage	Selector
+sublineage	Selector
+subsublineage	Selector
 sample_collection_site	Phenotype
 primary_or_metastasis	Phenotype
 primary_disease	Selector
