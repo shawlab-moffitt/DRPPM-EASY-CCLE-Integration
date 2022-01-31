@@ -4,7 +4,7 @@ This is an extention of the [DRPPM Expression Analysis ShinY (EASY) Integration 
 
 CCLE: http://networkbiology.science/shiny/DRPPM_EASY_LargeProject_Integration_CCLE/
 
-CPTAC_LSCC: http://networkbiology.science/shiny/DRPPM_EASY_LargeProject_Integration_CPTAC/
+CPTAC_LSCC: http://networkbiology.science/shiny/DRPPM_EASY_LargeProject_Integration_LSCC_CPTAC/
 
 
 # Installation
@@ -33,6 +33,32 @@ CPTAC_LSCC: http://networkbiology.science/shiny/DRPPM_EASY_LargeProject_Integrat
 
 # Required Files
 
+## Required User Input Files
+
+* **User In-App Data Input Files:**
+  * Expression Matrix:
+    * Must be tab delimited with gene names as symbols located in the first column with subsequent columns consiting of the sample name as the header and expression data down the column
+    * The current App expects lowly expressed genes filtered out and normalized data either to FPKM or TMM
+      * Larger files might inflict memory issues for you local computer
+  * Meta File:
+    * Must be tab delimited with two columns. First column of sasmple names and second column as phenotype grouping of the samples
+* **Expression Matrix (.tsv/.txt):**
+  * Must be tab delimited with gene names as symbols located in the first column with subsequent columns consiting of the sample name as the header and expression data down the column.
+* **Meta Data (.tsv/.txt):**
+  * Three column, tab-delimited, format with columns in the order of Sample Name, Meta Group, Sample Type
+  * This is used to group the expression data into comparison groups for differential expression analysis
+* **Meta Selector Data (.tsv/.txt)(Optional):**
+  * This is used when the expression data is able to be subset for analysis
+    * In the case of the CCLE example we can subset the expression data based on disease or lineage before grouping with the meta file
+  * This is a two column, tab-delimited, file with the first column being the meta groups (as seen in the second column of the main meta data) and the second column is either "Phenotype" or "Selector"
+    * "Selector" designates if the meta group is used to subset the expression data
+    * "Phenotype" designates if the meta group is used to group the expression data
+* **Name Map File (.tsv/.txt)(Optional):**
+  * This is a two-column, tab delimited file with the first column consisting of the sample names used in the expression and meta data and a second column consisting of a possible alternative/extended name or more information on that sample.
+  * This can be usefull when sample names might be acronyms of a longer name or there is more information the user may want to allocate to that sample.
+
+## Required for Setup - Provided
+
 * **MSigDB Gene Set Names:**
   * These [gene set files](https://github.com/shawlab-moffitt/DRPPM-EASY-Database-Integration/tree/main/GeneSet_data) were gathered from the [Molecular Signatures Database (MSigDB)](http://www.gsea-msigdb.org/gsea/msigdb/index.jsp) as separate collections and processed through R to generate a master gene set file with catagorical labels to use for GSEA and ssGSEA analysis.
   * This is used mainly for the UI for gmt category selection.
@@ -40,28 +66,7 @@ CPTAC_LSCC: http://networkbiology.science/shiny/DRPPM_EASY_LargeProject_Integrat
   * The RData gene set list is a more refined format of the gene set table.
   * This is a named list with over 32,000 gene sets from MSigDB paired with the genes they consist of.
   * This list is used for the back end analysis.
-* **User Data Input Files:**
-  * Expression Matrix:
-    * Must be tab delimited with gene names as symbols located in the first column with subsequent columns consiting of the sample name as the header and expression data down the column
-    * The current App expects lowly expressed genes filtered out and normalized data either to FPKM or TMM
-      * Larger files might inflict memory issues for you local computer
-  * Meta File:
-    * Must be tab delimited with two columns. First column of sasmple names and second column as phenotype grouping of the samples
-* **Project Database Files:**
-  * Meta Data:
-    * Three column, tab-delimited, format with columns in the order of Sample Name, Meta Group, Sample Type
-    * This is used to group the expression data into comparison groups for differential expression analysis
-  * Meta Selector Data (Optional):
-    * This is used when the expression data is able to be subset for analysis
-      * In the case of the CCLE example we can subset the expression data based on disease or lineage before grouping with the meta file
-    * This is a two column, tab-delimited, file with the first column being the meta groups (as seen in the second column of the main meta data) and the second column is either "Phenotype" or "Selector"
-      * "Selector" designates if the meta group is used to subset the expression data
-      * "Phenotype" designates if the meta group is used to group the expression data
-  * Expression Data:
-    * This should be a tab-delimited metrix with the columns labeling each sample and the rows labeling the feature/gene and the cell values should be un-logged expression values
-  * Name Map (Optional):
-    * This should be a two column, tab-delimited, format with the first column being the sample name used in the expression and meta data and the second column annotating another possible name for the sample
-    * This is usefull when samples may have longer names or alternate descriptive names that may identify them
+
 
 # App Preparation
 
