@@ -37,6 +37,7 @@ db_namemap_file <- '~/R/DRPPM-EASY-Database-Integration-main/CCLE_data/CCLE_Name
 
 
 
+
 ####
 ##
 ## Everything below should stay unchanged
@@ -147,12 +148,35 @@ ui <-
              tabPanel("Intro and Methods",
                       fluidPage(
                         mainPanel(
-                          h2("Analysis Methods"),
-                          p("Single-sample gene set enrichment analysis (ssGSEA) [PMID: 19847166, PMID: 30595505] was used to quantify the expression signatures."),
-                          h2(),
-                          h4("Download Example Expression and Meta Data for Comparison"),
-                          downloadButton("ExampDownload3.R", "Download Example RNAseq Expression Matrix"),
-                          downloadButton("ExampDownload3.RM", "Download Example RNAseq Meta Data"),
+                          tabsetPanel(
+                            id = 'intropage',
+                            tabPanel("Intoduction",
+                                     h3("Introduction"),
+                                     p("This is an extention of the DRPPM Expression Analysis ShinY (EASY) App which allows a user to integrate data from the Cancer Cell Line Encyclopedia (CCLE) with a dataset of their choice. With the gathered data they may perform differential gene expression comparison and reciprocal gene set enrichment analyses. This R Shiny app is very similar in features to the original EASY Integration app, expect for the addition of the Data Input and Sample Selection tab which allows for the user to upload their data and perform CCLE sample selection as well as preparation for comparison analysis downstream."),
+                                     h3("Differential Gene Expression Methods"),
+                                     p("Differential gene expression analysis is performed on the expression data between two groups defined by the provided metadata file. The samples chosen are log-transformed (log2 + 1). A model matrix is then designed for LIMMA linear modeling followed by empirical Bayes statistics to moderate gene variance and modeling of the global characteristic of the data. Of note, the current pipeline expects the matrix input quantification are pre-normalized, such as in CPM, TMM, or FPKM."),
+                                     h3("Gene Set Enrichment Analysis (GSEA) Methods"),
+                                     p("Gene Set Enrichment Analysis (GSEA) is performed through signal-to-noise calculations on the expression matrix. This calculation requires at least two types of sample groups and at least three samples for each grouping. The signal-to-noise calculation scales the difference of means by standard deviation and generates a ranked list of genes, effectively capturing the differences between phenotypes. The GSEA identifies the enrichment score (ES) for a gene set, which indicates the extent that the gene set is overrepresented at the beginning or end of the list of ranked genes. The enrichment score is calculated by walking down the ranked gene list and increasing the running-sum statistic when a gene is in the gene set and decreasing when it is not. The maximum deviation from zero that is encountered through walking the list is the ES, where a positive ES indicates the gene set is enriched at the top of the ranked list and a negative ES indicates the gene set is enriched at the bottom of the ranked list. A leading-edge gene list is provided displaying a subset of the genes in the gene set that contribute the most to the ES."),
+                                     h4("Gene Set Sources"),
+                                     p("The Molecular Signatures Database (MSigDB) is a collection of over 32,000 annotated gene sets divided into 9 major collections as well as various sub-collections [PMID: 16199517, PMID: 12808457]. The MSigDB  gene sets were downloaded with the msigdbr package and processed through R using Tidyverse packages to combine the gene sets into a data frame."),
+                            ),
+                            tabPanel("Data Selection Tutorial",
+                                     h3("Download Example Expression and Meta Data for Comparison"),
+                                     downloadButton("ExampDownload3.R", "Download Example RNAseq Expression Matrix"),
+                                     downloadButton("ExampDownload3.RM", "Download Example RNAseq Meta Data"),
+                                     h3("Subsetting Expression Data:"),
+                                     p("This is an optional selection depending on the large project data that is being analyzed. If there is a 'MetaSelector' file, which is described on the GitHub page, this option to subset the expression data will appear. This is useful if the expression data can be subset be a certain parameter, for instance in the example of a CCLE data set the samples come from various different diseases or Cancer Linages, so the selector file and subsetting the expression data allows the user to narrow down which subset is of interest."),
+                                     h3("Selecting a Coniditon of Interest"),
+                                     p("After subsetting the expression data, if that is an option, the user must select a condition/phentotype from the drop down box which is generated based on the meta data."),
+                                     h3("Other Options:"),
+                                     p("The user may choose to log2 transform the selected expression data as well as name the selected data being analyzed which will be used as a label throughout the analysis."),
+                                     h3("Grouping User and Project Data:"),
+                                     p("Once the data is uploaded the user may select which groups from each expression data to compare. The analysis groups together Group1 from both datasets and Group2 from both datasets, and thos become a new 'Group1' and 'Group2' which will be compared in the down stream analysis."),
+                                     p(),
+                                     p("You may find more information on our ",a("GitHub page.", href="https://github.com/shawlab-moffitt/DRPPM-EASY-LargeProject-Integration"))
+                            )
+                          )
+                          
                         )
                       )
              ),
@@ -398,6 +422,7 @@ ui <-
   )
 
 
+
 ####----Server----####
 
 
@@ -562,7 +587,7 @@ server <- function(input, output, session) {
   })
   
   output$downloadNameMapbutton <- renderUI({
-    #req(input$updateMETA)
+    
     if (is.null(db_namemap) == FALSE) {
       
       downloadButton("downloadNameMap","Download Name Map")
@@ -1433,8 +1458,8 @@ server <- function(input, output, session) {
     colnames(meta.n)[1] <- "SampleName"
     meta.n <- meta.n %>%
       mutate(Type = case_when(
-        SampleName %in% g1 ~ "Group1",
-        SampleName %in% g2 ~ "Group2"
+        SampleName %in% g1 ~ input$g1label,
+        SampleName %in% g2 ~ input$g2label
       )
       )
     meta.n
@@ -1456,8 +1481,8 @@ server <- function(input, output, session) {
     colnames(meta.n)[1] <- "SampleName"
     meta.n <- meta.n %>%
       mutate(Type = case_when(
-        SampleName %in% g1 ~ "Group1",
-        SampleName %in% g2 ~ "Group2"
+        SampleName %in% g1 ~ input$g1label,
+        SampleName %in% g2 ~ input$g2label
       )
       )
     meta.n
@@ -3469,7 +3494,6 @@ server <- function(input, output, session) {
   )
   
 }
-
 
 # Run the application 
 shinyApp(ui = ui, server = server)
