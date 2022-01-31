@@ -1,6 +1,10 @@
 # DRPPM-EASY-Database-Integration
 
-This is an extention of the [DRPPM Expression Analysis ShinY (EASY) Integration App](https://github.com/shawlab-moffitt/DRPPM-EASY-Integration) which allows the user to integrate their data witht the data of a large project database, for example we use the [Cancer Cell Line Encyclopedia (CCLE)](https://sites.broadinstitute.org/ccle/) and a [Lung Squamous Cell Carcinoma](https://www.sciencedirect.com/science/article/pii/S0092867421008576?via%3Dihub) study from Clinical Proteomic Tumor Analysis Consortium (CPTAC). Through the integration of data sets users may perform expression level differences and in-depth reciprocal Gene Set Enrichment Analysis (GSEA). This R Shiny app is very similar in features to the original Integration app, with the addition of a sample selection tab which allows the user to subset samples or a study of their choice. Based on this selection, the expression and meta data will be subset and imported in the back end to the app for further analysis and visualization. 
+This is an extention of the [DRPPM Expression Analysis ShinY (EASY) Integration App](https://github.com/shawlab-moffitt/DRPPM-EASY-Integration) which allows the user to integrate their data with the data of a large project database, for example we use the [Cancer Cell Line Encyclopedia (CCLE)](https://sites.broadinstitute.org/ccle/) and a [Lung Squamous Cell Carcinoma](https://www.sciencedirect.com/science/article/pii/S0092867421008576?via%3Dihub) study from Clinical Proteomic Tumor Analysis Consortium (CPTAC). Through the integration of data sets, users may perform expression level differences and in-depth reciprocal Gene Set Enrichment Analysis (GSEA). This R Shiny app is very similar in features to the original Integration app, with the addition of a sample selection tab which allows the user to subset samples or a study of their choice. Based on this selection, the expression and meta data will be subset and imported in the back end to the app for further analysis and visualization. While this GitHub page can be cloned and ran locally there are current versions of the CCLE app and CPTAC app found at the links below.
+
+CCLE: http://networkbiology.science/shiny/DRPPM_EASY_LargeProject_Integration_CCLE/
+
+CPTAC_LSCC: http://networkbiology.science/shiny/DRPPM_EASY_LargeProject_Integration_LSCC_CPTAC/
 
 
 # Installation
@@ -29,6 +33,35 @@ This is an extention of the [DRPPM Expression Analysis ShinY (EASY) Integration 
 
 # Required Files
 
+## Required User Input Files
+
+* **User In-App Data Input Files:**
+  * Expression Matrix:
+    * Must be tab delimited with gene names as symbols located in the first column with subsequent columns consiting of the sample name as the header and expression data down the column
+    * The current App expects lowly expressed genes filtered out and normalized data either to FPKM or TMM
+      * Larger files might inflict memory issues for you local computer
+  * Meta File:
+    * Must be tab delimited with two columns. First column of sasmple names and second column as phenotype grouping of the samples
+
+## Required for Setup
+
+* **Large Project Expression Matrix (.tsv/.txt):**
+  * Must be tab delimited with gene names as symbols located in the first column with subsequent columns consiting of the sample name as the header and expression data down the column.
+* **Large Project Meta Data (.tsv/.txt):**
+  * Three column, tab-delimited, format with columns in the order of Sample Name, Meta Group, Sample Type
+  * This is used to group the expression data into comparison groups for differential expression analysis
+* **Large Project Meta Selector Data (.tsv/.txt)(Optional):**
+  * This is used when the expression data is able to be subset for analysis
+    * In the case of the CCLE example we can subset the expression data based on disease or lineage before grouping with the meta file
+  * This is a two column, tab-delimited, file with the first column being the meta groups (as seen in the second column of the main meta data) and the second column is either "Phenotype" or "Selector"
+    * "Selector" designates if the meta group is used to subset the expression data
+    * "Phenotype" designates if the meta group is used to group the expression data
+* **Large Project Name Map File (.tsv/.txt)(Optional):**
+  * This is a two-column, tab delimited file with the first column consisting of the sample names used in the expression and meta data and a second column consisting of a possible alternative/extended name or more information on that sample.
+  * This can be usefull when sample names might be acronyms of a longer name or there is more information the user may want to allocate to that sample.
+
+## Required for Setup - Provided
+
 * **MSigDB Gene Set Names:**
   * These [gene set files](https://github.com/shawlab-moffitt/DRPPM-EASY-Database-Integration/tree/main/GeneSet_data) were gathered from the [Molecular Signatures Database (MSigDB)](http://www.gsea-msigdb.org/gsea/msigdb/index.jsp) as separate collections and processed through R to generate a master gene set file with catagorical labels to use for GSEA and ssGSEA analysis.
   * This is used mainly for the UI for gmt category selection.
@@ -36,28 +69,7 @@ This is an extention of the [DRPPM Expression Analysis ShinY (EASY) Integration 
   * The RData gene set list is a more refined format of the gene set table.
   * This is a named list with over 32,000 gene sets from MSigDB paired with the genes they consist of.
   * This list is used for the back end analysis.
-* **User Data Input Files:**
-  * Expression Matrix:
-    * Must be tab delimited with gene names as symbols located in the first column with subsequent columns consiting of the sample name as the header and expression data down the column
-    * The current App expects lowly expressed genes filtered out and normalized data either to FPKM or TMM
-      * Larger files might inflict memory issues for you local computer
-  * Meta File:
-    * Must be tab delimited with two columns. First column of sasmple names and second column as phenotype grouping of the samples
-* **Project Database Files:**
-  * Meta Data:
-    * Three column, tab-delimited, format with columns in the order of Sample Name, Meta Group, Sample Type
-    * This is used to group the expression data into comparison groups for differential expression analysis
-  * Meta Selector Data (Optional):
-    * This is used when the expression data is able to be subset for analysis
-      * In the case of the CCLE example we can subset the expression data based on disease or lineage before grouping with the meta file
-    * This is a two column, tab-delimited, file with the first column being the meta groups (as seen in the second column of the main meta data) and the second column is either "Phenotype" or "Selector"
-      * "Selector" designates if the meta group is used to subset the expression data
-      * "Phenotype" designates if the meta group is used to group the expression data
-  * Expression Data:
-    * This should be a tab-delimited metrix with the columns labeling each sample and the rows labeling the feature/gene and the cell values should be un-logged expression values
-  * Name Map (Optional):
-    * This should be a two column, tab-delimited, format with the first column being the sample name used in the expression and meta data and the second column annotating another possible name for the sample
-    * This is usefull when samples may have longer names or alternate descriptive names that may identify them
+
 
 # App Preparation
 
@@ -109,3 +121,5 @@ db_namemap_file <- '~/R/DRPPM-EASY-Database-Integration-main/CCLE_data/CCLE_Name
    * These new groups 1 and 2 will be used for the downstream analysis
 3. The new groups can be labeled here
 4. The new meta table that is generated and shown may be names and downloaded for further use
+
+The corresponding tabs are idenctical to the tabs in the original DRPPM EASY Integration app where more information on those features can be found [here](https://github.com/shawlab-moffitt/DRPPM-EASY-Integration).
