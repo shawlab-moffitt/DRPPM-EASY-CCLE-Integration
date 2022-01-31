@@ -27,11 +27,11 @@ ProjName <- 'CCLE'
 
 ##--Database Files--##
 #Meta
-db_meta_file <- '~/R/DRPPM-EASY-Database-Integration-main/CCLE_data/CCLE_meta_melt_nosub.zip'
+db_meta_file <- '~/R/DRPPM-EASY-Database-Integration-main/CCLE_data/CCLE_meta.zip'
 #Meta Selector File
-db_meta_selec_file <- '~/R/DRPPM-EASY-Database-Integration-main/CCLE_data/CCLE_meta_selector_nosub.tsv'
+db_meta_selec_file <- '~/R/DRPPM-EASY-Database-Integration-main/CCLE_data/CCLE_meta_selector.tsv'
 #Expression Data
-db_expr_file <- '~/R/DRPPM-EASY-Database-Integration-main/CCLE_data/CCLE_expr_trim_NewName.zip'
+db_expr_file <- '~/R/DRPPM-EASY-Database-Integration-main/CCLE_data/CCLE_expr.zip'
 #Name Map File
 db_namemap_file <- '~/R/DRPPM-EASY-Database-Integration-main/CCLE_data/CCLE_NameMap.tsv'
 
