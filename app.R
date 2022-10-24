@@ -29,34 +29,34 @@ ProjectName <- "CCLE"
 
 ##--Database Files--##
 #Meta
-db_meta_file <- '~/R/DRPPM-EASY-LargeProject-Integration-main/CCLE_data/CCLE_meta.zip'
+db_meta_file <- 'CCLE_data/CCLE_meta.zip'
 #Meta Selector File
-db_meta_selec_file <- '~/R/DRPPM-EASY-LargeProject-Integration-main/CCLE_data/CCLE_meta_selector.tsv'
+db_meta_selec_file <- 'CCLE_data/CCLE_meta_selector.tsv'
 #Expression Data
-db_expr_file <- '~/R/DRPPM-EASY-LargeProject-Integration-main/CCLE_data/CCLE_expr.zip'
+db_expr_file <- 'CCLE_data/CCLE_expr.zip'
 #Name Map File
-db_namemap_file <- '~/R/DRPPM-EASY-LargeProject-Integration-main/CCLE_data/CCLE_NameMap.tsv'
+db_namemap_file <- 'CCLE_data/CCLE_NameMap.tsv'
 
 ##--User Gene Set Input--##
 #write in the name of your gene set list for shiny UI
 userGSlist_name <- 'CellMarker Gene Sets'
 #path to your gene set file .gmt or .txt/.tsv
-userGS_file <- '~/R/DRPPM-EASY-LargeProject-Integration-main/GeneSet_data/CellMarker_gsNsym_HS.tsv'
+userGS_file <- 'CellMarker_gsNsym_HS.tsv'
 #Does gene set file have header?
 header.gs <- TRUE
 #path to your R data list object for ssGSEA
-userRData_file <- '~/R/DRPPM-EASY-LargeProject-Integration-main/GeneSet_data/CellMarker_GS_HS.RData'
+userRData_file <- 'CellMarker_GS_HS.RData'
 
 
 
 ####----Backend Data Input----####
 
 #MSigDB gene set
-msigdb <- '~/R/DRPPM-EASY-LargeProject-Integration-main/GeneSet_data/msigdb_gsNsym_HS.zip'
+msigdb <- 'msigdb_gsNsym_HS.zip'
 #MSigDB gene set FOR UI
-msigdb2 <- '~/R/DRPPM-EASY-LargeProject-Integration-main/GeneSet_data/msigdb_gsNcat_HS.tsv'
+msigdb2 <- 'msigdb_gsNcat_HS.tsv'
 #gene set list for ssGSEA
-load('~/R/DRPPM-EASY-LargeProject-Integration-main/GeneSet_data/msigdb_gs_HS.RData')
+load('msigdb_gs_HS.RData')
 #Cytokine genes for human
 CTKgenes <- c("IL2","IL12A","IL12B","IL17A","IFNA1","IFNB1","IFNG","IFNGR","CD11b",
               "ITGAM","CD33","ENTPD1","ICOSLG","CD275","CD278","TNFSF9","TNFRSF9",
