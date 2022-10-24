@@ -781,14 +781,14 @@ server <- function(input, output, session) {
   output$metadatalabel <- renderUI({
     
     req(input$updateMETA)
-    h4("Sample Name Guide")
+    h4("Meta Data")
     
   })
   
   output$exprdatalabel <- renderUI({
     
     req(input$updateMETA)
-    h4("Sample Name Guide")
+    h4("Expression Data")
     
   })
   
